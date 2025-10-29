@@ -20,4 +20,12 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  server: {
+    proxy: {
+      '/query': {
+        target: process.env.VITE_GRAPHQL_PROXY_TARGET ?? 'http://localhost:8080',
+        changeOrigin: true,
+      },
+    },
+  },
 })
