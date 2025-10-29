@@ -1,0 +1,17 @@
+# GraphQL schema for uploading da audio
+
+scalar Upload
+
+type Query {
+  jobs: [Job!]!
+}
+
+type Mutation {
+  uploadAudio(file: Upload!): Job!
+}
+
+type Job {
+  id: ID!
+  filename: String!
+  status: String!
+}
