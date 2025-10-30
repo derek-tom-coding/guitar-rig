@@ -8,7 +8,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${BLUE}🎸 Starting Guitar Rig Development Environment${NC}\n"
+echo -e "${BLUE} === Starting guitar rig application! ===${NC}\n"
 
 cleanup() {
     echo -e "\n${YELLOW}Shutting down servers...${NC}"
@@ -38,7 +38,7 @@ cd ..
 sleep 2
 
 # Start frontend
-echo -e "${GREEN}Starting React frontend on http://localhost:5300${NC}"
+echo -e "${GREEN}Starting React frontend on http://localhost:3000${NC}"
 cd client
 pnpm dev > ../client.log 2>&1 &
 FRONTEND_PID=$!
@@ -56,5 +56,4 @@ echo -e "   Frontend: tail -f client.log"
 echo -e "\n${YELLOW}Press Ctrl+C to stop all servers${NC}"
 echo -e "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
 
-# Wait for both processes
 wait

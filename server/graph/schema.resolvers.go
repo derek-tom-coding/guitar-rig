@@ -17,20 +17,37 @@ import (
 	"github.com/google/uuid"
 )
 
-// UploadAudio is the resolver for the uploadAudio field.
-func (r *mutationResolver) UploadAudio(ctx context.Context, file graphql.Upload) (*model.Job, error) {
-	jobID := uuid.New().String()
-	filename := filepath.Join("uploads", jobID+"_"+file.Filename)
+// Helper function to save uploaded file to disk
+func saveUploadedFile(file graphql.Upload, uploadsDir, jobID string) (string, error) {
+	// if /uploads not there, make the folder.
+	if _, err := os.Stat(uploadsDir); os.IsNotExist(err) {
+		if err := os.Mkdir(uploadsDir, os.ModePerm); err != nil {
+			return "", fmt.Errorf("failed to create uploads directory: %w", err)
+		}
+	}
 
-	// saves the uploaded file to disk
+	filename := filepath.Join(uploadsDir, jobID+"_"+file.Filename)
 	outFile, err := os.Create(filename)
 	if err != nil {
-		return nil, fmt.Errorf("failed to create file: %w", err)
+		return "", fmt.Errorf("failed to create file: %w", err)
 	}
 	defer outFile.Close()
 
 	if _, err := io.Copy(outFile, file.File); err != nil {
-		return nil, fmt.Errorf("failed to save file: %w", err)
+		return "", fmt.Errorf("failed to save file: %w", err)
+	}
+
+	return filename, nil
+}
+
+// UploadAudio is the resolver for the uploadAudio field.
+func (r *mutationResolver) UploadAudio(ctx context.Context, file graphql.Upload) (*model.Job, error) {
+	jobID := uuid.New().String()
+
+	// saves the uploaded file to disk
+	filename, err := saveUploadedFile(file, "uploads", jobID)
+	if err != nil {
+		return nil, err
 	}
 
 	// Make job
