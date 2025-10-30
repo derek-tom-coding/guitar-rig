@@ -17,7 +17,7 @@ import (
 	"github.com/google/uuid"
 )
 
-// Helper function to save uploaded file to disk
+// helper function to save uploaded file to disk
 func saveUploadedFile(file graphql.Upload, uploadsDir, jobID string) (string, error) {
 	// if /uploads not there, make the folder.
 	if _, err := os.Stat(uploadsDir); os.IsNotExist(err) {
@@ -26,6 +26,7 @@ func saveUploadedFile(file graphql.Upload, uploadsDir, jobID string) (string, er
 		}
 	}
 
+	// create destination file
 	filename := filepath.Join(uploadsDir, jobID+"_"+file.Filename)
 	outFile, err := os.Create(filename)
 	if err != nil {
