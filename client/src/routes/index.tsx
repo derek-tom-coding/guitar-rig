@@ -71,7 +71,7 @@ function UploadPage() {
           <CardHeader>
             <CardTitle>Upload Audio</CardTitle>
             <CardDescription>
-              Select an audio file to send to the processing server.
+              Select an audio file to send to the mixer.
             </CardDescription>
           </CardHeader>
           <CardContent>
