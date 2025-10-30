@@ -1,5 +1,11 @@
 # guitar rig
 
+```
+cd guitar-rig
+
+./guitar-rig.sh
+```
+
 This is supposed to be a thing to do mixing effects on stuff.
 
 <img width="700" height="168" alt="image" src="https://github.com/user-attachments/assets/5c8dcfd4-36b9-4921-afc6-15834d69c408" />
